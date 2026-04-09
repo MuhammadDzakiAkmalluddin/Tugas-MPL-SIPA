@@ -265,6 +265,7 @@ function adminArsip() {
                     <div class="table-actions">
                       ${a.status==='menunggu'?`<button class="btn btn-success btn-xs" onclick="verifikasiArsip('${a.id}')">✓ Verifikasi</button>`:''}
                       ${a.status==='menunggu'?`<button class="btn btn-danger btn-xs" onclick="tolakArsip('${a.id}')">✕ Tolak</button>`:''}
+                      <button class="btn btn-outline btn-xs" onclick="lihatArsip('${a.id}')">👁 Lihat</button>
                       <button class="btn btn-outline btn-xs" onclick="adminEditArsip('${a.id}')">✏️ Edit</button>
                       <button class="btn btn-danger btn-xs" onclick="hapusArsip('${a.id}')">🗑</button>
                     </div>
@@ -306,6 +307,39 @@ function adminEditArsip(id) {
         a.ukuran = document.getElementById('ea-ukuran').value;
         closeModal(); navigate('arsip'); toast('Arsip diperbarui','success');
       ">Simpan</button>
+    </div>
+  `);
+}
+function lihatArsip(id) {
+  const a = APP.data.arsip.find(x => x.id === id);
+  if (!a) return;
+
+  openModal(`
+    <div class="modal-header">
+      <h3>📄 Preview Dokumen — ${a.id}</h3>
+      <button class="modal-close" onclick="closeModal()">✕</button>
+    </div>
+
+    <div class="modal-body" style="text-align:center;">
+      ${
+        a.file 
+        ? `<iframe src="${a.file}" style="width:100%;height:400px;border:none;"></iframe>`
+        : `<p class="text-gray">Preview tidak tersedia (belum ada file)</p>`
+      }
+      
+      <div style="margin-top:10px;">
+        <strong>${a.dokumen}</strong><br>
+        <span class="text-xs text-gray">Ukuran: ${a.ukuran}</span>
+      </div>
+    </div>
+
+    <div class="modal-footer">
+      <button class="btn btn-outline" onclick="closeModal()">Tutup</button>
+      ${
+        a.file 
+        ? `<a href="${a.file}" target="_blank" class="btn btn-admin">⬇ Download</a>` 
+        : ''
+      }
     </div>
   `);
 }
@@ -384,7 +418,7 @@ function adminPengaduan() {
                   <td>${statusBadge(p.status)}</td>
                   <td>
                     <div class="table-actions">
-                      <button class="btn btn-outline btn-xs" onclick="lihatPengaduan('${p.id}')">👁 Detail</button>
+          
                       ${p.status==='menunggu'?`<button class="btn btn-admin btn-xs" onclick="tindakPengaduan('${p.id}')">▶ Tindak</button>`:''}
                       ${p.status==='proses'?`<button class="btn btn-success btn-xs" onclick="selesaikanPengaduan('${p.id}')">✓ Selesai</button>`:''}
                       <button class="btn btn-outline btn-xs" onclick="adminEditPengaduan('${p.id}')">✏️</button>
@@ -400,7 +434,7 @@ function adminPengaduan() {
     </div>
   `;
 }
-function lihatPengaduan(id) {
+function lihat(id) {
   const p = APP.data.pengaduan.find(x=>x.id===id);
   if (!p) return;
   openModal(`
@@ -625,10 +659,11 @@ function adminLaporan() {
               <option value="perkara">Perkara</option>
               <option value="jadwal">Jadwal Sidang</option>
               <option value="surat">Surat</option>
+              <option value="arsip">Arsip</option>
               <option value="pengaduan">Pengaduan</option>
             </select>
           </div>
-          <button class="btn btn-admin" style="margin-top:1.2rem;" onclick="generateLaporan()">🔍 Ekspor PDF</button>
+         
         </div>
       </div>
     </div>
@@ -699,7 +734,8 @@ function eksporPDF() {
       default: return 'yellow';
     }
   };
-
+  const logo = window.location.origin + '/assets/Logo.png';
+  const arsipFiltered = filterByTanggal(d.arsip);
   // Bangun HTML PDF
   const htmlContent = `<!DOCTYPE html>
 <html lang="id">
@@ -773,6 +809,42 @@ function eksporPDF() {
     </table>
   </div>
   `: ''}
+
+  ${jenis==='arsip'||jenis==='semua' ? `
+<div class="section">
+  <div class="section-title">📁 DATA ARSIP DOKUMEN</div>
+  <table>
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>No. Perkara</th>
+        <th>Pemohon</th>
+        <th>Dokumen</th>
+        <th>Tanggal Upload</th>
+        <th>Ukuran</th>
+        <th>Status</th>
+      </tr>
+    </thead>
+    <tbody>
+      ${arsipFiltered.map(a=>`
+        <tr>
+          <td>${a.id}</td>
+          <td>${a.perkara}</td>
+          <td>${a.pemohon}</td>
+          <td>${a.dokumen}</td>
+          <td>${a.tgl}</td>
+          <td>${a.ukuran}</td>
+          <td>
+            <span class="badge badge-${badgeClass(a.status)}">
+              ${a.status}
+            </span>
+          </td>
+        </tr>
+      `).join('')}
+    </tbody>
+  </table>
+</div>
+`: ''}
 
   ${jenis==='pengaduan'||jenis==='semua' ? `
   <div class="section">

@@ -54,12 +54,7 @@ function loadUserApp() {
               <div class="topbar-subtitle">Selamat datang, ${u.nama}!</div>
             </div>
           </div>
-          <div class="topbar-right">
-            <button class="topbar-btn" onclick="toast('Tidak ada notifikasi baru','info')" title="Notifikasi">🔔</button>
-            <div style="width:36px;height:36px;background:var(--user-light);border-radius:var(--radius);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:0.8rem;color:var(--user-secondary);cursor:pointer;" onclick="navigate('profil')">
-              ${u.avatar}
-            </div>
-          </div>
+          
         </header>
         <div class="page-body" id="page-content"></div>
       </div>
@@ -499,8 +494,8 @@ function userArsip() {
       <div class="card-body">
         ${[
           ['✅','KTP Pemohon','Foto KTP yang jelas dan valid'],
-          ['✅','Buku Nikah/Akta Nikah','Asli atau fotokopi yang dilegalisir'],
-          ['⬜','Kartu Keluarga','Foto KK yang masih berlaku'],
+          ['⬜','Buku Nikah/Akta Nikah','Asli atau fotokopi yang dilegalisir'],
+          ['✅','Kartu Keluarga','Foto KK yang masih berlaku'],
           ['⬜','Surat Gugatan','Surat gugatan bermaterai'],
         ].map(([status,dok,desc]) => `
           <div style="display:flex;align-items:center;gap:0.75rem;padding:0.75rem 0;border-bottom:1px solid var(--gray-100);">
@@ -509,8 +504,7 @@ function userArsip() {
               <div class="font-bold text-sm">${dok}</div>
               <div class="text-xs text-gray">${desc}</div>
             </div>
-            ${status==='⬜'?`<button class="btn btn-user btn-xs" style="margin-left:auto;" onclick="userModalUploadDokumen()">Upload</button>`:''}
-          </div>
+           
         `).join('')}
       </div>
     </div>
@@ -583,21 +577,7 @@ function userPengaduan() {
         `}
       </div>
     </div>
-    <!-- Kategori pengaduan -->
-    <div class="card animate-in" style="margin-top:1.5rem;">
-      <div class="card-header"><h3>📌 Kategori Pengaduan</h3></div>
-      <div class="card-body">
-        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:0.75rem;">
-          ${[['😤','Pelayanan','Keluhan terkait kualitas layanan'],['📋','Prosedur','Kendala prosedur & persyaratan'],['🏢','Fasilitas','Kondisi fasilitas pengadilan'],['👤','Petugas','Sikap dan kinerja petugas']].map(([ico,kat,desc])=>`
-            <div style="background:var(--gray-50);border-radius:var(--radius);padding:1rem;text-align:center;cursor:pointer;border:1px solid var(--gray-100);" onclick="userModalAjukanPengaduan()">
-              <div style="font-size:1.5rem;">${ico}</div>
-              <div class="font-bold text-sm" style="margin-top:0.35rem;">${kat}</div>
-              <div class="text-xs text-gray" style="margin-top:0.2rem;">${desc}</div>
-            </div>
-          `).join('')}
-        </div>
-      </div>
-    </div>
+
   `;
 }
 

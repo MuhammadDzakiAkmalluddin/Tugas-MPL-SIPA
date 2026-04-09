@@ -27,7 +27,7 @@ const APP = {
       { id: 'SRT-004', pemohon: 'Hendra Putra', jenis: 'Surat Keterangan Perkara', tgl: '2025-01-26', status: 'menunggu', keterangan: '-' },
     ],
     arsip: [
-      { id: 'ARS-001', perkara: 'PRK-001', pemohon: 'Ahmad Fauzi', dokumen: 'KTP + Buku Nikah', tgl: '2025-01-15', status: 'terverifikasi', ukuran: '2.4 MB' },
+      { id: 'ARS-001', perkara: 'PRK-001', pemohon: 'Ahmad Fauzi', dokumen: 'KTP + Kartu Keluarga', tgl: '2025-01-15', status: 'terverifikasi', ukuran: '2.4 MB', file: 'assets/dokumen1.pdf' },
       { id: 'ARS-002', perkara: 'PRK-002', pemohon: 'Siti Rahayu', dokumen: 'Akta Nikah', tgl: '2025-01-18', status: 'terverifikasi', ukuran: '1.8 MB' },
       { id: 'ARS-003', perkara: 'PRK-003', pemohon: 'Budi Santoso', dokumen: 'KTP + Sertifikat Tanah', tgl: '2025-01-20', status: 'menunggu', ukuran: '5.1 MB' },
       { id: 'ARS-004', perkara: 'PRK-006', pemohon: 'Fatimah Zahro', dokumen: 'KTP', tgl: '2025-01-28', status: 'ditolak', ukuran: '0.9 MB' },

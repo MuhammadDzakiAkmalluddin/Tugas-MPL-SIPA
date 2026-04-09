@@ -59,9 +59,7 @@ function loadAdminApp() {
             </div>
           </div>
           <div class="topbar-right">
-            <button class="topbar-btn" onclick="toast('Tidak ada notifikasi baru','info')" title="Notifikasi">
-              🔔 <span class="badge-dot"></span>
-            </button>
+           
             <button class="topbar-btn" onclick="navigate('users')" title="Pengaturan">⚙️</button>
             <div style="width:36px;height:36px;background:var(--admin-light);border-radius:var(--radius);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:0.8rem;color:var(--admin-secondary);cursor:pointer;" onclick="toast('Profil staf: ${u.nama}','info')">
               ${u.avatar}
@@ -130,7 +128,7 @@ function adminDashboard() {
   const maxVal = Math.max(...vals);
 
   return `
-    <div class="page-header">
+    <div class="page-">
       <div class="page-header-left">
         <h2>Dashboard Admin</h2>
         <p>Ringkasan aktivitas — ${new Date().toLocaleDateString('id-ID',{weekday:'long',year:'numeric',month:'long',day:'numeric'})}</p>
